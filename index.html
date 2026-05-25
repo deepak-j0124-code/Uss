@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universe Built Her — Kasvi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════
+   POLAROID MEMORIES
+══════════════════════════════ */
+#memories{
+  flex-direction:column;
+  padding:7rem 2rem;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%,
+    rgba(11,24,96,.22) 0%, transparent 70%);
+}
+
+.polaroid-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:3rem;
+  max-width:1200px;
+  width:100%;
+  margin-top:2rem;
+}
+
+.polaroid{
+  background:#fdfbf7;
+  padding:1rem 1rem 1.8rem;
+  border-radius:3px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.45),
+    0 0 30px rgba(233,204,130,.08);
+  transform:rotate(var(--rot));
+  transition:
+    transform .5s var(--ease-out),
+    box-shadow .5s ease;
+  position:relative;
+  overflow:hidden;
+  opacity:0;
+}
+
+.polaroid.vis{
+  opacity:1;
+  animation:fadeUp 1s forwards;
+}
+
+.polaroid:nth-child(1){--rot:-4deg;}
+.polaroid:nth-child(2){--rot:3deg;}
+.polaroid:nth-child(3){--rot:-2deg;}
+.polaroid:nth-child(4){--rot:5deg;}
+
+.polaroid:hover{
+  transform:rotate(0deg) scale(1.05);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.55),
+    0 0 45px rgba(233,204,130,.18);
+}
+
+.photo-wrap{
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  background:#ddd;
+  position:relative;
+}
+
+.photo-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 1s ease;
+  display:block;
+}
+
+.polaroid:hover img{
+  transform:scale(1.08);
+}
+
+/* subtle shine */
+.photo-wrap::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:60%;
+  height:100%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+  );
+  transform:skewX(-20deg);
+}
+
+.polaroid:hover .photo-wrap::after{
+  animation:shine 1.2s ease;
+}
+
+.polaroid-caption{
+  margin-top:1rem;
+  text-align:center;
+  color:#222;
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.1rem;
+  font-style:italic;
+  line-height:1.6;
+}
+
+/* floating effect */
+.polaroid{
+  animation:
+    floatMemory 6s ease-in-out infinite;
+}
+
+.polaroid:nth-child(2){
+  animation-delay:-2s;
+}
+.polaroid:nth-child(3){
+  animation-delay:-4s;
+}
+.polaroid:nth-child(4){
+  animation-delay:-1s;
+}
+
+@keyframes floatMemory{
+  0%,100%{
+    transform:translateY(0px) rotate(var(--rot));
+  }
+  50%{
+    transform:translateY(-12px) rotate(calc(var(--rot) + 1deg));
+  }
+}
+
+@keyframes shine{
+  100%{
+    left:140%;
+  }
+}
+
+:root {
+  --void: #00000c;
+  --deep: #040118;
+  --nebula-1: #0b1860;
+  --nebula-2: #260845;
+  --nebula-3: #450824;
+  --nebula-4: #041830;
+  --star-white: #f9f6ff;
+  --star-warm: #ffe9c4;
+  --star-blue: #bcd8ff;
+  --gold: #e9cc82;
+  --gold-dim: rgba(233,204,130,0.5);
+  --gold-faint: rgba(233,204,130,0.12);
+  --rose: #ff82b6;
+  --rose-faint: rgba(255,130,182,0.12);
+  --blue-faint: rgba(130,182,255,0.12);
+  --font-display: 'Cinzel', serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-body: 'Crimson Pro', serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--void);
+  color:var(--star-white);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  cursor:none;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  will-change: scroll-position;
+}
+
+/* ── CURSOR ── */
+#cur{
+  position:fixed;width:7px;height:7px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 14px var(--gold),0 0 30px rgba(233,204,130,0.4);
+  transition:width .2s,height .2s;
+}
+#cur-r{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(233,204,130,0.4);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .18s ease,width .3s,height .3s,border-color .3s;
+}
+body:has(a:hover) #cur-r,
+body:has(.galaxy-card:hover) #cur-r{
+  width:54px;height:54px;
+  border-color:rgba(233,204,130,0.7);
+}
+
+/* ── FIXED LAYERS ── */
+#sf{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+/* Aurora glow layer */
+#aurora{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:1;pointer-events:none;
+  opacity:.55;
+}
+
+/* ── SECTIONS ── */
+section{
+  position:relative;z-index:3;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+#hero{flex-direction:column;text-align:center;padding:2rem;}
+
+.hero-eyebrow{
+  font-family:var(--font-display);
+  font-size:clamp(.5rem,1.1vw,.75rem);
+  letter-spacing:.55em;color:var(--gold);
+  opacity:0;animation:fadeUp 1.6s .6s forwards;
+  text-transform:uppercase;
+}
+
+
+#name-canvas{
+  display:block;margin:1.8rem auto;
+  max-width:92vw;
+}
+
+.hero-tagline{
+  font-family:var(--font-serif);
+  font-size:clamp(1rem,2.2vw,1.55rem);
+  font-style:italic;font-weight:300;
+  color:var(--star-blue);
+  opacity:0;animation:fadeUp 1.6s 3.8s forwards;
+  max-width:580px;line-height:2;
+  text-shadow:0 0 40px rgba(188,216,255,.25);
+}
+
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  opacity:0;animation:fadeUp 1s 5.2s forwards;
+}
+.scroll-hint span{
+  font-family:var(--font-display);
+  font-size:.45rem;letter-spacing:.5em;
+  color:rgba(255,255,255,.35);text-transform:uppercase;
+}
+.scroll-line{
+  width:1px;height:52px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:pulse 2.2s infinite;
+}
+
+/* ══════════════════════════════
+   NARRATION
+══════════════════════════════ */
+#narration{
+  flex-direction:column;text-align:center;
+  padding:5rem 2rem;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%,rgba(11,24,96,.28) 0%,transparent 70%);
+}
+
+.narration-line{
+  font-family:var(--font-serif);
+  font-size:clamp(1.5rem,4.2vw,3.2rem);
+  font-weight:300;line-height:1.75;
+  max-width:820px;text-align:center;
+  opacity:0;transform:translateY(48px);
+  transition:opacity 1.4s var(--ease-out),transform 1.4s var(--ease-out);
+}
+.narration-line.vis{opacity:1;transform:translateY(0);}
+.narration-line em{color:var(--gold);font-style:italic;}
+.narration-line .hl{
+  background:linear-gradient(135deg,#e9cc82 0%,#ff82b6 50%,#82b6ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;font-weight:600;
+}
+
+/* ══════════════════════════════
+   QUALITIES / GALAXIES
+══════════════════════════════ */
+#galaxies{
+  flex-direction:column;padding:7rem 2rem;
+  background:
+    radial-gradient(ellipse 55% 80% at 15% 50%,rgba(38,8,69,.45) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 65% at 85% 30%,rgba(69,8,36,.38) 0%,transparent 65%);
+}
+
+.sec-label{
+  font-family:var(--font-display);font-size:.58rem;
+  letter-spacing:.65em;color:var(--gold);text-transform:uppercase;
+  margin-bottom:.9rem;
+  opacity:0;transform:translateY(22px);
+  transition:opacity 1s var(--ease-out),transform 1s var(--ease-out);
+}
+.sec-label.vis{opacity:1;transform:translateY(0);}
+
+.sec-title{
+  font-family:var(--font-serif);
+  font-size:clamp(1.9rem,5vw,3.7rem);
+  font-weight:300;font-style:italic;
+  margin-bottom:5rem;text-align:center;
+  opacity:0;transform:translateY(22px);
+  transition:opacity 1.3s .2s var(--ease-out),transform 1.3s .2s var(--ease-out);
+}
+.sec-title.vis{opacity:1;transform:translateY(0);}
+
+.galaxies-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:1.6rem;max-width:1120px;width:100%;
+}
+
+.galaxy-card{
+  position:relative;
+  padding:2.6rem 2.4rem;
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:6px;
+  background:rgba(255,255,255,.018);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  overflow:hidden;
+  opacity:0;transform:translateY(44px) scale(.97);
+  transition:
+    opacity .95s var(--ease-out),
+    transform .95s var(--ease-out),
+    border-color .35s,
+    box-shadow .35s;
+  cursor:default;
+}
+.galaxy-card.vis{opacity:1;transform:translateY(0) scale(1);}
+
+/* Inner shimmer blob */
+.galaxy-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),
+    rgba(233,204,130,.1) 0%,transparent 55%);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+/* Bottom edge accent */
+.galaxy-card::after{
+  content:'';
+  position:absolute;bottom:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold-dim),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.galaxy-card:hover::before,.galaxy-card:hover::after{opacity:1;}
+.galaxy-card:hover{
+  border-color:rgba(233,204,130,.22);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 40px rgba(233,204,130,.06);
+  transform:translateY(-6px) scale(1) !important;
+}
+
+.g-orb{
+  width:52px;height:52px;border-radius:50%;
+  margin-bottom:1.6rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.45rem;position:relative;
+}
+.g-orb::after{
+  content:'';position:absolute;inset:-7px;border-radius:50%;
+  border:1px solid;border-color:inherit;opacity:.28;
+  animation:orbPulse 3.5s infinite ease-in-out;
+}
+
+.g-quality{
+  font-family:var(--font-display);font-size:.68rem;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.65rem;
+}
+.g-desc{
+  font-family:var(--font-serif);font-size:1.12rem;font-style:italic;
+  line-height:1.85;color:rgba(255,255,255,.72);font-weight:300;
+}
+
+/* ══════════════════════════════
+   PLANETS
+══════════════════════════════ */
+#planets{
+  flex-direction:column;text-align:center;
+  padding:6rem 2rem;min-height:110vh;
+}
+#planet-canvas{
+  display:block;margin:3rem auto 0;
+  max-width:100%;width:800px;height:500px;
+}
+
+/* ══════════════════════════════
+   CONSTELLATION
+══════════════════════════════ */
+#constellation{
+  flex-direction:column;text-align:center;padding:6rem 2rem;
+}
+#const-canvas{
+  display:block;margin:3rem auto;
+  max-width:100%;width:700px;height:500px;
+}
+
+/* ══════════════════════════════
+   LETTER
+══════════════════════════════ */
+#letter{
+  flex-direction:column;text-align:center;padding:6rem 2rem;
+  background:
+    radial-gradient(ellipse 65% 65% at 50% 50%,rgba(38,8,69,.55) 0%,transparent 70%);
+}
+
+.letter-wrap{
+  max-width:700px;text-align:left;position:relative;
+  padding:4.5rem;
+  border:1px solid rgba(233,204,130,.13);
+  border-radius:8px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(24px) saturate(120%);
+  -webkit-backdrop-filter:blur(24px) saturate(120%);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(233,204,130,.1);
+  opacity:0;transform:translateY(44px);
+  transition:opacity 1.5s var(--ease-out),transform 1.5s var(--ease-out);
+}
+.letter-wrap.vis{opacity:1;transform:translateY(0);}
+
+/* Decorative quote mark */
+.letter-wrap::before{
+  content:'\201C';
+  position:absolute;top:.5rem;left:2.2rem;
+  font-family:var(--font-serif);font-size:9rem;
+  color:var(--gold);opacity:.1;line-height:1;
+  pointer-events:none;
+}
+/* Thin gold left bar */
+.letter-wrap::after{
+  content:'';
+  position:absolute;left:0;top:15%;bottom:15%;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--gold-dim),transparent);
+  border-radius:2px;
+}
+
+.letter-text{
+  font-family:var(--font-serif);
+  font-size:clamp(1.05rem,2vw,1.3rem);
+  font-style:italic;line-height:2.1;
+  color:rgba(255,255,255,.82);font-weight:300;
+}
+.letter-text p{margin-bottom:1.6rem;}
+.letter-text .gold{color:var(--gold);font-style:normal;font-weight:400;}
+.letter-sign{
+  margin-top:2rem;
+  font-family:var(--font-display);font-size:.66rem;
+  letter-spacing:.32em;color:var(--gold);text-transform:uppercase;
+}
+
+/* ══════════════════════════════
+   FINALE
+══════════════════════════════ */
+#finale{
+  flex-direction:column;text-align:center;padding:5rem 2rem;
+  background:
+    radial-gradient(ellipse 75% 75% at 50% 40%,rgba(11,24,96,.38) 0%,transparent 70%);
+}
+
+.finale-eyebrow{
+  font-family:var(--font-display);
+  font-size:clamp(.5rem,1.1vw,.75rem);
+  letter-spacing:.55em;color:var(--gold);text-transform:uppercase;
+  opacity:0;animation:fadeUp 1.5s .3s forwards;
+  margin-bottom:1.2rem;
+}
+.finale-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,9vw,7rem);
+  font-weight:900;letter-spacing:.18em;
+  background:linear-gradient(135deg,#e9cc82 0%,#fffaf2 35%,#bcd8ff 65%,#ffa4d0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:0;animation:fadeUp 2s .5s forwards;
+  filter:drop-shadow(0 0 50px rgba(233,204,130,.28));
+}
+.finale-sub{
+  font-family:var(--font-serif);
+  font-size:clamp(1rem,2.4vw,1.55rem);
+  font-style:italic;color:rgba(255,255,255,.55);
+  margin-top:1.6rem;
+  opacity:0;animation:fadeUp 2s 1.6s forwards;
+}
+.finale-closing{
+  margin-top:3.5rem;
+  font-family:var(--font-serif);
+  font-size:1rem;font-style:italic;
+  color:rgba(255,255,255,.32);
+  opacity:0;animation:fadeUp 2s 2.4s forwards;
+  line-height:2;
+}
+
+/* ── DIVIDER ── */
+.divider{
+  width:220px;height:1px;margin:3.5rem auto;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+  position:relative;
+}
+.divider::after{
+  content:'✦';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--void);padding:0 .6rem;
+  color:var(--gold);font-size:.75rem;
+}
+
+/* ── NEBULA BLOBS ── */
+.nb{
+  position:fixed;border-radius:50%;
+  filter:blur(110px);pointer-events:none;z-index:1;
+  animation:blobDrift var(--d,22s) infinite alternate ease-in-out;
+}
+@keyframes blobDrift{
+  from{transform:translate(0,0) scale(1) rotate(0deg);}
+  to{transform:translate(28px,-18px) scale(1.06) rotate(8deg);}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(32px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes pulse{
+  0%,100%{opacity:.35;transform:scaleY(1);}
+  50%{opacity:1;transform:scaleY(1.12);}
+}
+@keyframes orbPulse{
+  0%,100%{transform:scale(1);opacity:.28;}
+  50%{transform:scale(1.18);opacity:.6;}
+}
+
+/* ── MUSIC BTN ── */
+#music-btn{
+  position:fixed;bottom:2rem;right:2rem;z-index:1000;
+  width:50px;height:50px;border-radius:50%;
+  border:1px solid rgba(233,204,130,.35);
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(12px);
+  color:var(--gold);font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s ease;
+  box-shadow:0 0 22px rgba(233,204,130,.1),inset 0 1px 0 rgba(255,255,255,.06);
+}
+#music-btn:hover{
+  background:rgba(233,204,130,.12);
+  box-shadow:0 0 35px rgba(233,204,130,.28);
+  border-color:rgba(233,204,130,.6);
+}
+
+/* ── PROGRESS BAR ── */
+#progress{
+  position:fixed;top:0;left:0;height:2px;z-index:1000;
+  background:linear-gradient(to right,var(--gold),var(--rose),#82b6ff);
+  width:0%;transition:width .1s linear;
+  box-shadow:0 0 10px rgba(233,204,130,.5);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .galaxies-grid{grid-template-columns:1fr;}
+  .letter-wrap{padding:2.5rem 1.8rem;}
+  #planet-canvas,#const-canvas{width:100%;height:320px;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="progress"></div>
+<button id="music-btn" title="Toggle ambient music">♪</button>
+
+<!-- nebula blobs -->
+<div class="nb" style="width:640px;height:640px;background:radial-gradient(circle,rgba(11,24,96,.45),transparent);top:-120px;left:-120px;--d:26s;"></div>
+<div class="nb" style="width:520px;height:520px;background:radial-gradient(circle,rgba(38,8,69,.5),transparent);top:35%;right:-160px;--d:19s;animation-delay:-6s;"></div>
+<div class="nb" style="width:680px;height:420px;background:radial-gradient(circle,rgba(69,8,36,.32),transparent);bottom:8%;left:18%;--d:32s;animation-delay:-12s;"></div>
+<div class="nb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(4,24,48,.4),transparent);top:60%;left:5%;--d:24s;animation-delay:-4s;"></div>
+
+<canvas id="sf"></canvas>
+<canvas id="aurora"></canvas>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <p class="hero-eyebrow">A Tribute From The Cosmos</p>
+  <canvas id="name-canvas" width="1100" height="260"></canvas>
+  <p class="hero-tagline">
+    Among billions of stars in this vast universe,<br>
+    one was fashioned differently — with extra warmth, extra light.
+  </p>
+  <div class="scroll-hint">
+    <span>Journey Through Her Universe</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ NARRATION ═══ -->
+<section id="narration">
+  <p class="narration-line" data-d="0">
+    Among <em>billions of humans,</em> some are created differently…
+  </p>
+  <div class="divider" style="margin:4.5rem auto;"></div>
+  <p class="narration-line" data-d="200">
+    They carry <span class="hl">galaxies in their eyes</span> and supernovas in their laughter.
+  </p>
+  <div class="divider" style="margin:4.5rem auto;"></div>
+  <p class="narration-line" data-d="400">
+    The universe did not make her by accident —
+  </p>
+  <p class="narration-line" data-d="600">
+    it <em>took its time.</em>
+  </p>
+</section>
+
+<!-- ═══ QUALITIES ═══ -->
+<section id="galaxies">
+  <p class="sec-label">Her Infinite Qualities</p>
+  <h2 class="sec-title">Galaxies Within Her</h2>
+
+  <div class="galaxies-grid">
+    <div class="galaxy-card" style="transition-delay:.0s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#ffe08a,#e8c97a);border-color:#e8c97a;">💛</div>
+      <p class="g-quality">Pure Kindness</p>
+      <p class="g-desc">She gives without keeping score — her warmth reaches people before her words even do. A rare kind of kindness that the world desperately needs more of.</p>
+    </div>
+    <div class="galaxy-card" style="transition-delay:.08s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#b8d4ff,#7eb3ff);border-color:#7eb3ff;">✨</div>
+      <p class="g-quality">Brilliant Mind</p>
+      <p class="g-desc">Her mind is Sharp, perceptive, and curious which makes her see the world in ways others cannot.</p>
+    </div>
+    <div class="galaxy-card" style="transition-delay:.16s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#ffb8d4,#ff7eb3);border-color:#ff7eb3;">🌸</div>
+      <p class="g-quality">Strength & Grace</p>
+      <p class="g-desc">She bends but never breaks. Through every storm she carries herself with a quiet dignity that makes everyone around her feel steadier, safer.</p>
+    </div>
+    <div class="galaxy-card" style="transition-delay:.24s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#c8b8ff,#a07eb3);border-color:#c8b8ff;">🌙</div>
+      <p class="g-quality">Depth of Soul</p>
+      <p class="g-desc">She feels things profoundly. This depth makes every conversation feel like touching something real.</p>
+    </div>
+    <div class="galaxy-card" style="transition-delay:.32s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#b8ffda,#7edfb3);border-color:#7edfb3;">🌿</div>
+      <p class="g-quality">Calming Presence</p>
+      <p class="g-desc">The room shifts when she enters.My Anxiety quiets, smiles appear. Her presence is a sanctuary — the kind of calm that only certain rare souls can carry.</p>
+    </div>
+    <div class="galaxy-card" style="transition-delay:.40s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#ffd8b8,#ffb07e);border-color:#ffb07e;">☀️</div>
+      <p class="g-quality">Radiant Joy</p>
+      <p class="g-desc">Her laugh, her smile is unstoppable. She doesn't just feel happy — she radiates it, pulling everyone into her orbit of warmth and light.</p>
+    </div>
+    <!-- <div class="galaxy-card" style="transition-delay:.48s"> -->
+      <!-- <div class="g-orb" style="background:radial-gradient(135deg,#ffd4e8,#ff9ec8);border-color:#ff9ec8;">💎</div>
+      <p class="g-quality">Unwavering Loyalty</p>
+      <p class="g-desc">Once she loves you, she loves you with her whole constellation. Her loyalty is the anchor kind — constant, unwavering, never conditional.</p>
+    </div> -->
+    <div class="galaxy-card" style="transition-delay:.56s">
+      <div class="g-orb" style="background:radial-gradient(135deg,#d4e8ff,#9ec8ff);border-color:#9ec8ff;">🦋</div>
+      <p class="g-quality">Creative Spirit</p>
+      <p class="g-desc">She sees beauty in overlooked things — in ordinary days, small gestures, quiet moments.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLANETS ═══ -->
+<section id="planets">
+  <p class="sec-label reveal">Floating Memories</p>
+  <h2 class="sec-title reveal">Planets of Our Universe</h2>
+  <p>Tap on the emoji cutuuu 😘</p>
+  <canvas id="planet-canvas"></canvas>
+</section>
+
+<!-- ═══ CONSTELLATION ═══ -->
+<section id="constellation">
+  <p class="sec-label reveal">The Map of Her Soul</p>
+  <h2 class="sec-title reveal">Her Constellation</h2>
+  <canvas id="const-canvas"></canvas>
+  <p class="narration-line" style="max-width:520px;margin-top:2rem;font-size:1.12rem;">
+    Every star connected — every moment held — forming the shape of someone truly irreplaceable.
+  </p>
+</section>
+
+<!-- ═══ POLAROID MEMORIES ═══ -->
+<section id="memories">
+  <p class="sec-label reveal">Captured Across Time</p>
+  <h2 class="sec-title reveal">Polaroids From Our Universe</h2>
+
+  <div class="polaroid-grid">
+
+    <div class="polaroid reveal">
+      <div class="photo-wrap">
+        <img src="img1.jpg" alt="">
+      </div>
+      <p class="polaroid-caption">The smile I'll protect forever ✨</p>
+    </div>
+
+    <div class="polaroid reveal">
+      <div class="photo-wrap">
+        <img src="img3.jpeg" alt="">
+      </div>
+      <p class="polaroid-caption">Late night chaos & comfort 🌙</p>
+    </div>
+
+    <div class="polaroid reveal">
+      <div class="photo-wrap">
+        <img src="img6.png" alt="">
+      </div>
+      <p class="polaroid-caption">Two idiots, one soul bond 💛</p>
+    </div>
+
+    <div class="polaroid reveal">
+      <div class="photo-wrap">
+        <img src="img24.jpeg" alt="">
+      </div>
+      <p class="polaroid-caption">Moments that'll keep safe 💫</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ LETTER ═══ -->
+<section id="letter">
+  <p class="sec-label reveal">A Message Carried By Stars</p>
+  <h2 class="sec-title reveal">From My Heart to the Cosmos</h2>
+
+  <div class="letter-wrap">
+    <div class="letter-text">
+      <p>Dear <span class="gold">Kasvi</span>,</p>
+      <p>I have looked for the right words a thousand times. I have started sentences and abandoned them, because nothing has ever felt large enough to hold what you mean to meee.</p>
+      <p>So I borrowed the universe instead.</p>
+      <p>You are the cousin sister I didn't just grow up with — you are the one I grew <em>because of.</em> Every memory we share has a warmth in it that I find nowhere else...kriyo ek br recall them😌 That one paglo wali laugh, 1 am late night convos we did, holding each other's secret and a bond which no one can break ever ... Truly I wanna be the comfort in your hard tyms, the laughter in ordinary ones, the constant that will make you feel everything manageable.</p>
+      <p>You have this incredible way of making me feel <span class="gold">happy</span> that whenever I see chat notification of yours, it make me feel above the <em>7va aasmaan 😂</em>. Youu are literally the rarestt gift that God has given mee since your birthh.Yrr I will definetely carry you in all your situations and hardships, and sach me these aree not just words,, but the actual emotionss of minee 🥺🫂</p>
+      <p>You are the best to me, in this whole universe I didn't felt that type of attachment ever as it is with youuu and the reason is honestly real that you are veryy very bohot zada special. I promise you that I will never compromise in my efforts for making you laugh, happy, smile and feel special as you are to mee.</p>
+      <p>I am so proud of the person you are. The depth you carry. The love you give so freely. The strength you show even when you don't realize you're showing it.</p>
+      <p>I wish I could be all time with you physically also so that whenever you cry I can hold your tears on my shoulders (after all gym kyu kra hh... taki teri problems se fight backk kr skuu). You literally means a lot to me and I can't even imagine the day without talking or without uuuuu. </p>
+      <p>The universe built you differently, <span class="gold">Kashuuuu</span> — with extra care, extra light, and extra everything. And I am endlessly grateful that out of all the people in this galaxy, the stars arranged themselves so that you became my familyyy and I trust uu alottttttt schme</p>
+      <p>Yar I don't know shi me yr what place, what importance, what priority, I hold in your lyff but yrr sachmee me bhyii you have thee 1stestt place, my 1st priority (above all others), andd my sbse zada walaa important living being bachaa... above everyoneee🥹🫂</p>
+      <p>Always Thankful of God and the universe yrr that they sent u in myy family myy worldd <em>(bestfriend bhii tuhii, bhn bhii tuhii, dil jaan sbkuchh tuu hiii ywrrr... hayee 😭😭)</em></p>
+      <p>Love and meanss youu a lottttttttt yrrrr</p>
+    </div>
+    <p class="letter-sign">— Written with love, across every star ✦</p>
+  </div>
+</section>
+
+<!-- ═══ FINALE ═══ -->
+<section id="finale">
+  <p class="finale-eyebrow">She Is</p>
+  <h1 class="finale-title">KASVI</h1>
+  <p class="finale-sub">A universe in a person. A person the universe chose.</p>
+  <div class="divider" style="margin-top:3rem;"></div>
+  <div class="finale-closing">
+    <p>Made with every star in the sky ✦ and all the love in between</p>
+    <p>Although it is not much but still I hope u'll like it</p>
+    <p>Showering constant love, support, care, strength to you my bacha 💝</p>
+  </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════ */
+const cur=document.getElementById('cur');
+const curR=document.getElementById('cur-r');
+let cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cur.style.left=cx+'px';cur.style.top=cy+'px';});
+(function animC(){rx+=(cx-rx)*.22;ry+=(cy-ry)*.22;;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animC);})();
+
+document.querySelectorAll('.galaxy-card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+
+/* ═══════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════ */
+const prog=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const pct=(scrollY/(document.body.scrollHeight-innerHeight))*100;
+  prog.style.width=pct+'%';
+},{ passive:true });
+
+/* ═══════════════════════════════════════
+   STARFIELD
+═══════════════════════════════════════ */
+const sf=document.getElementById('sf');
+const sctx=sf.getContext('2d');
+let W,H,stars=[],shooters=[];
+
+function rsz(){W=sf.width=innerWidth;H=sf.height=innerHeight;}
+rsz(); window.addEventListener('resize',rsz,{passive:true});
+
+function mkStars(){
+  stars=[];
+  for(let i=0;i<340;i++){
+    const sz=Math.random();
+    stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:sz<.6?Math.random()*.6+.2:sz<.9?Math.random()*.9+.4:Math.random()*1.6+.8,
+      o:Math.random()*.5+.2,
+      ts:Math.random()*.018+.004,td:Math.random()>.5?1:-1,
+      sp:Math.random()*.45+.08,
+      col:['#ffffff','#bcd8ff','#ffe9c4','#ffc4e4','#c4ffea'][Math.floor(Math.random()*5)]
+    });
+  }
+}
+mkStars();
+
+/* Shooting stars */
+class Shooter{
+  constructor(){this.reset();}
+  reset(){
+    this.x=Math.random()*W*1.6-W*.3;
+    this.y=Math.random()*H*.5-60;
+    this.len=Math.random()*200+100;
+    this.spd=Math.random()*14+9;
+    this.ang=Math.PI/5.5+Math.random()*.28;
+    this.life=0;this.maxLife=this.len+Math.random()*100;
+    this.a=0;this.w=Math.random()*.6+.8;
+  }
+  step(){
+    this.life+=this.spd;
+    this.x+=Math.cos(this.ang)*this.spd;
+    this.y+=Math.sin(this.ang)*this.spd;
+    if(this.life<35)this.a=this.life/35;
+    else if(this.life>this.maxLife-35)this.a=(this.maxLife-this.life)/35;
+    else this.a=1;
+    if(this.life>this.maxLife)this.reset();
+  }
+  draw(ctx){
+    const tx=this.x-Math.cos(this.ang)*this.len;
+    const ty=this.y-Math.sin(this.ang)*this.len;
+    const g=ctx.createLinearGradient(tx,ty,this.x,this.y);
+    g.addColorStop(0,'transparent');
+    g.addColorStop(.65,`rgba(233,204,130,${this.a*.55})`);
+    g.addColorStop(1,`rgba(255,255,255,${this.a})`);
+    ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(this.x,this.y);
+    ctx.strokeStyle=g;ctx.lineWidth=this.w;ctx.stroke();
+  }
+}
+for(let i=0;i<6;i++){const s=new Shooter();s.life=Math.random()*s.maxLife;shooters.push(s);}
+
+let scrollY2=0;
+window.addEventListener('scroll',()=>scrollY2=scrollY,{passive:true});
+
+(function animSF(){
+  sctx.clearRect(0,0,W,H);
+  const par=scrollY2*.14;
+  stars.forEach(s=>{
+    s.o+=s.ts*s.td;
+    if(s.o>.98||s.o<.12)s.td*=-1;
+    const sy=(s.y+par*s.sp)%H;
+    sctx.globalAlpha=s.o;
+    if(s.r>1){
+      const g=sctx.createRadialGradient(s.x,sy,0,s.x,sy,s.r*4);
+      g.addColorStop(0,s.col.replace('rgb','rgba').replace(')',',0.35)'));
+      g.addColorStop(1,'transparent');
+      sctx.fillStyle=g;
+      sctx.beginPath();sctx.arc(s.x,sy,s.r*4,0,Math.PI*2);sctx.fill();
+    }
+    sctx.fillStyle=s.col;
+    sctx.beginPath();sctx.arc(s.x,sy,s.r,0,Math.PI*2);sctx.fill();
+  });
+  sctx.globalAlpha=1;
+  shooters.forEach(s=>{s.step();s.draw(sctx);});
+  requestAnimationFrame(animSF);
+})();
+
+/* ═══════════════════════════════════════
+   AURORA
+═══════════════════════════════════════ */
+const acan=document.getElementById('aurora');
+const actx=acan.getContext('2d');
+function rsza(){acan.width=innerWidth;acan.height=innerHeight;}
+rsza();window.addEventListener('resize',rsza,{passive:true});
+
+const bands=[
+  {y:.18,amp:80,spd:.00045,phase:0,col:'rgba(88,50,200,'},
+  {y:.32,amp:60,spd:.00032,phase:2.1,col:'rgba(200,50,120,'},
+  {y:.52,amp:90,spd:.00038,phase:4.4,col:'rgba(50,100,220,'},
+  {y:.68,amp:50,spd:.00028,phase:1.7,col:'rgba(120,50,200,'},
+];
+(function animAurora(){
+  actx.clearRect(0,0,acan.width,acan.height);
+  const t=Date.now();
+  const aw=acan.width,ah=acan.height;
+  bands.forEach(b=>{
+    const cy=ah*b.y+Math.sin(t*b.spd+b.phase)*b.amp;
+    const g=actx.createRadialGradient(aw*.5,cy,0,aw*.5,cy,ah*.38);
+    g.addColorStop(0,b.col+'.12)');
+    g.addColorStop(.5,b.col+'.04)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    actx.fillStyle=g;
+    actx.fillRect(0,0,aw,ah);
+  });
+  requestAnimationFrame(animAurora);
+})();
+
+/* ═══════════════════════════════════════
+   NAME CANVAS
+═══════════════════════════════════════ */
+const nc=document.getElementById('name-canvas');
+const nctx=nc.getContext('2d');
+nc.width=1100;nc.height=260;
+
+let nStars=[],nFrame=0;
+
+function buildName(){
+  const tmp=document.createElement('canvas');
+  tmp.width=1100;tmp.height=260;
+  const tc=tmp.getContext('2d');
+  tc.fillStyle='#fff';
+  tc.font='900 200px "Cinzel",serif';
+  tc.textAlign='center';tc.textBaseline='middle';
+  tc.fillText('KASVI 💝',550,130);
+  const px=tc.getImageData(0,0,1100,260).data;
+  nStars=[];
+  for(let y=0;y<260;y+=3.8){
+    for(let x=0;x<1100;x+=3.8){
+      if(px[(Math.floor(y)*1100+Math.floor(x))*4+3]>100){
+        nStars.push({
+          tx:x,ty:y,
+          x:Math.random()*1100,y:Math.random()*260,
+          r:Math.random()*2.6+1,
+          col:['#fff','#ffe9c4','#e9cc82','#bcd8ff','#ffc4e4'][Math.floor(Math.random()*5)],
+          delay:Math.random()*35
+        });
+      }
+    }
+  }
+}
+buildName();
+
+(function animName(){
+  nFrame++;
+  nctx.clearRect(0,0,1100,260);
+  nStars.forEach(s=>{
+    if(nFrame<s.delay)return;
+    s.x+=(s.tx-s.x)*.11;s.y+=(s.ty-s.y)*.11;
+    const gp=.75+Math.sin(nFrame*.07+s.tx*.012)*.25;
+    // outer glow
+    const g=nctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*13);
+    g.addColorStop(0,s.col);
+    g.addColorStop(.15,'rgba(255,255,255,.85)');
+    g.addColorStop(1,'transparent');
+    nctx.beginPath();nctx.arc(s.x,s.y,s.r*13,0,Math.PI*2);
+    nctx.fillStyle=g;nctx.globalAlpha=.18*gp;nctx.fill();
+    // body
+    nctx.beginPath();nctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    nctx.fillStyle=s.col;nctx.globalAlpha=gp;nctx.fill();
+    // core
+    nctx.beginPath();nctx.arc(s.x,s.y,s.r*.4,0,Math.PI*2);
+    nctx.fillStyle='#fff';nctx.globalAlpha=.95;nctx.fill();
+  });
+  nctx.globalAlpha=1;
+  requestAnimationFrame(animName);
+})();
+
+/* ═══════════════════════════════════════
+   PLANET CANVAS
+═══════════════════════════════════════ */
+const pc=document.getElementById('planet-canvas');
+const pctx=pc.getContext('2d');
+pc.width=800;pc.height=500;
+
+const mems=[
+  {label:'Believing in Each Other',col:['#ffd080','#ff8c40'],r:55,ang:0,orb:180,spd:.0032,em:'🫂'},
+  {label:'Unending Comfort',col:['#80c8ff','#4080c8'],r:40,ang:1.5,orb:280,spd:.0022,em:'😘'},
+  {label:'Late Night Talks',col:['#c880ff','#8040c8'],r:35,ang:3,orb:130,spd:.0052,em:'🌙'},
+  {label:'Secret Jokes',col:['#ff80c8','#c84080'],r:30,ang:4.5,orb:340,spd:.0016,em:'🤫'},
+  {label:'Growing Up Together',col:['#80ffc8','#40c880'],r:45,ang:2.2,orb:222,spd:.0026,em:'🌱'},
+];
+
+let hPlanet=null;
+pc.addEventListener('mousemove',e=>{
+  const rect=pc.getBoundingClientRect();
+  const sx=800/rect.width,sy=500/rect.height;
+  const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
+  hPlanet=null;
+  mems.forEach(m=>{
+    const px=400+Math.cos(m.ang)*m.orb,py=250+Math.sin(m.ang)*m.orb*.36;
+    if(Math.hypot(mx-px,my-py)<m.r+12)hPlanet=m;
+  });
+});
+
+(function animPlanets(){
+  pctx.clearRect(0,0,800,500);
+  const cx=400,cy=250,t=Date.now()*.001;
+
+  // Sun
+  const sg=pctx.createRadialGradient(cx,cy,0,cx,cy,68);
+  sg.addColorStop(0,'#fffde8');sg.addColorStop(.28,'#ffd888');
+  sg.addColorStop(.65,'#e88830');sg.addColorStop(1,'transparent');
+  pctx.beginPath();pctx.arc(cx,cy,64,0,Math.PI*2);
+  pctx.fillStyle=sg;pctx.fill();
+  // corona rings
+  [92,118,152,194].forEach((r,i)=>{
+    pctx.beginPath();
+    pctx.arc(cx,cy,r+Math.sin(t+i)*5,0,Math.PI*2);
+    pctx.strokeStyle=`rgba(233,204,130,${.14-i*.03})`;
+    pctx.lineWidth=1;pctx.stroke();
+  });
+  pctx.font='18px serif';pctx.textAlign='center';
+  pctx.fillStyle='#1a0800';pctx.globalAlpha=1;pctx.fillText('🌍',cx,cy+6);
+
+  mems.forEach(m=>{
+    m.ang+=m.spd;
+    // orbit
+    pctx.beginPath();pctx.ellipse(cx,cy,m.orb,m.orb*.36,0,0,Math.PI*2);
+    pctx.strokeStyle='rgba(255,255,255,.04)';pctx.lineWidth=1;pctx.stroke();
+
+    const px=cx+Math.cos(m.ang)*m.orb;
+    const py=cy+Math.sin(m.ang)*m.orb*.36;
+    const hover=hPlanet===m;
+    const sc=hover?1.18:1;
+
+    // atmosphere glow
+    const ag=pctx.createRadialGradient(px,py,0,px,py,m.r*2.8);
+    ag.addColorStop(0,m.col[0]+'70');ag.addColorStop(1,'transparent');
+    pctx.beginPath();pctx.arc(px,py,m.r*2.8,0,Math.PI*2);
+    pctx.fillStyle=ag;pctx.globalAlpha=hover?.6:.35;pctx.fill();
+
+    // planet body
+    const pg=pctx.createRadialGradient(px-m.r*.32,py-m.r*.32,0,px,py,m.r*sc);
+    pg.addColorStop(0,m.col[0]);pg.addColorStop(1,m.col[1]);
+    pctx.beginPath();pctx.arc(px,py,m.r*sc,0,Math.PI*2);
+    pctx.fillStyle=pg;pctx.globalAlpha=1;pctx.fill();
+
+    // emoji
+    pctx.font=`${m.r*.9*sc}px serif`;
+    pctx.textAlign='center';
+    pctx.fillText(m.em,px,py+m.r*.36*sc);
+
+    // label
+    if(hover){
+      pctx.font='13px "Cinzel",serif';
+      pctx.fillStyle='#e9cc82';pctx.globalAlpha=.95;
+      pctx.fillText(m.label,px,py+m.r*sc+22);
+    }
+  });
+  pctx.globalAlpha=1;
+  requestAnimationFrame(animPlanets);
+})();
+
+/* ═══════════════════════════════════════
+   CONSTELLATION
+═══════════════════════════════════════ */
+const cc=document.getElementById('const-canvas');
+const cctx=cc.getContext('2d');
+cc.width=700;cc.height=500;
+
+const cStars=[
+  {x:350,y:65,label:'Kasvi',sz:11},
+  {x:200,y:155,label:'Kind',sz:7},
+  {x:500,y:155,label:'Brave',sz:7},
+  {x:120,y:285,label:'Warm',sz:6},
+  {x:350,y:245,label:'Bright',sz:9},
+  {x:580,y:285,label:'Strong',sz:6},
+  {x:215,y:395,label:'Joy',sz:7},
+  {x:485,y:395,label:'Love',sz:7},
+  {x:350,y:458,label:'Home',sz:10},
+];
+const cLines=[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,6],[4,7],[5,7],[6,8],[7,8]];
+let cProg=0,cInView=false;
+
+function inView(el){return el.getBoundingClientRect().top<innerHeight*.86;}
+
+(function animConst(){
+  cctx.clearRect(0,0,700,500);
+  if(cInView&&cProg<1)cProg=Math.min(1,cProg+.02);
+  const t=Date.now()*.001;
+
+  cLines.forEach((p,i)=>{
+    const del=i/cLines.length;
+    const lt=Math.max(0,(cProg-del*.7)/.3);
+    const a=Math.min(1,lt);if(a<=0)return;
+    const A=cStars[p[0]],B=cStars[p[1]];
+    const ex=A.x+(B.x-A.x)*Math.min(1,lt*1.5);
+    const ey=A.y+(B.y-A.y)*Math.min(1,lt*1.5);
+    cctx.beginPath();cctx.moveTo(A.x,A.y);cctx.lineTo(ex,ey);
+    cctx.strokeStyle=`rgba(188,216,255,${a*.3})`;cctx.lineWidth=.8;cctx.stroke();
+  });
+
+  cStars.forEach((s,i)=>{
+    const del=(i/cStars.length)*.5;
+    const st=Math.max(0,(cProg-del)/.5);
+    const a=Math.min(1,st);if(a<=0)return;
+    const tw=.72+.28*Math.sin(t*2.2+i*1.4);
+
+    // glow
+    const g=cctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.sz*4.5);
+    g.addColorStop(0,`rgba(233,204,130,${a*.38*tw})`);
+    g.addColorStop(1,'transparent');
+    cctx.beginPath();cctx.arc(s.x,s.y,s.sz*4.5,0,Math.PI*2);
+    cctx.fillStyle=g;cctx.fill();
+
+    // star
+    cctx.beginPath();cctx.arc(s.x,s.y,s.sz*tw,0,Math.PI*2);
+    const sg=cctx.createRadialGradient(s.x-s.sz*.3,s.y-s.sz*.3,0,s.x,s.y,s.sz);
+    sg.addColorStop(0,'#fff');sg.addColorStop(.45,'#ffe9c4');sg.addColorStop(1,'#e9cc82');
+    cctx.fillStyle=sg;cctx.globalAlpha=a;cctx.fill();
+
+    cctx.font=s.sz>9?'bold 12px "Cinzel",serif':'10px "Cinzel",serif';
+    cctx.fillStyle=s.sz>9?'#e9cc82':'rgba(255,255,255,.58)';
+    cctx.textAlign='center';
+    cctx.fillText(s.label,s.x,s.y-s.sz*tw-7);
+    cctx.globalAlpha=1;
+  });
+  requestAnimationFrame(animConst);
+})();
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+const revEls=document.querySelectorAll(
+  '.narration-line,.sec-label,.sec-title,.galaxy-card,.letter-wrap,.reveal'
+);
+function checkReveal(){
+  revEls.forEach(el=>{if(inView(el))el.classList.add('vis');});
+  if(!cInView&&inView(cc))cInView=true;
+}
+window.addEventListener('scroll',checkReveal,{passive:true});
+checkReveal();
+
+/* parallax blobs */
+window.addEventListener('scroll',()=>{
+  document.querySelectorAll('.nb').forEach((b,i)=>{
+    b.style.transform=`translateY(${scrollY*(0.04+i*.018)}px)`;
+  });
+},{passive:true});
+
+
+
+
+/* ═══════════════════════════════════════
+   AMBIENT MUSIC
+═══════════════════════════════════════ */
+// let aCtx=null,playing=false,mNodes=[];
+
+// function mkMusic(){
+//   if(aCtx)return;
+//   aCtx=new(window.AudioContext||window.webkitAudioContext)();
+//   function pad(f,g,det=0){
+//     const o=aCtx.createOscillator();
+//     const gn=aCtx.createGain();
+//     const filt=aCtx.createBiquadFilter();
+//     const rv=aCtx.createConvolver();
+//     const len=aCtx.sampleRate*3.5;
+//     const imp=aCtx.createBuffer(2,len,aCtx.sampleRate);
+//     for(let c=0;c<2;c++){
+//       const d=imp.getChannelData(c);
+//       for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);
+//     }
+//     rv.buffer=imp;
+//     o.type='sine';o.frequency.value=f;o.detune.value=det;
+//     filt.type='lowpass';filt.frequency.value=900;
+//     gn.gain.value=g;
+//     o.connect(filt);filt.connect(gn);
+//     gn.connect(rv);rv.connect(aCtx.destination);
+//     gn.connect(aCtx.destination);
+//     o.start();mNodes.push(o,gn);
+//   }
+//   pad(110,.06);pad(165,.04);pad(220,.05);
+//   pad(261.6,.03);pad(329.6,.025);pad(440,.015,6);
+// }
+
+// document.getElementById('music-btn').addEventListener('click',()=>{
+//   const btn=document.getElementById('music-btn');
+//   if(!playing){mkMusic();aCtx.resume();playing=true;btn.textContent='♫';btn.style.color='#e9cc82';btn.style.boxShadow='0 0 24px rgba(233,204,130,.38)';}
+//   else{aCtx.suspend();playing=false;btn.textContent='♪';btn.style.color='var(--gold)';btn.style.boxShadow='0 0 22px rgba(233,204,130,.1)';}
+// });
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════
+   REAL MUSIC PLAYER
+═══════════════════════════════════════ */
+
+const music = new Audio("music/stars.mp3");
+
+music.loop = true;
+music.volume = 0.4;
+
+let playing = false;
+
+document.getElementById('music-btn').addEventListener('click', () => {
+  const btn = document.getElementById('music-btn');
+
+  if (!playing) {
+    music.play();
+    playing = true;
+
+    btn.textContent = '♫';
+    btn.style.color = '#e9cc82';
+    btn.style.boxShadow = '0 0 24px rgba(233,204,130,.38)';
+  } else {
+    music.pause();
+    playing = false;
+
+    btn.textContent = '♪';
+    btn.style.color = 'var(--gold)';
+    btn.style.boxShadow = '0 0 22px rgba(233,204,130,.1)';
+  }
+});
+
+</script>
+</body>
+</html>
